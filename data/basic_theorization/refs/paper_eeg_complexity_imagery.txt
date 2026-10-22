@@ -1,0 +1,5 @@
+Title: Topographic Reorganization of EEG Complexity During Visual Mental Imagery: Insights from Lempel-Ziv Complexity in High-Density EEG
+Authors: Yu Gao; José Miguel Diniz
+Year: 2026
+Journal: Brain Topography
+Error: name 'doi' is not defined

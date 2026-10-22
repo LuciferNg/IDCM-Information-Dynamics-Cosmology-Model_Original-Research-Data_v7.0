@@ -1,0 +1,6 @@
+Title: Criticality of resting-state EEG predicts perturbational complexity and level of consciousness during anesthesia
+Authors: Charlotte Maschke; Jordan O’Byrne; Michele Angelo Colombo; Melanie Boly; Olivia Gosseries
+Year: 2023
+Journal: (no journal)
+Error: name 'doi' is not defined
+Try: https://doi.org/10.1101/2023.10.26.564247

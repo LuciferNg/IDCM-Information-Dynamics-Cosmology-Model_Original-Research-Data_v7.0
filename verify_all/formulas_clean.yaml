@@ -1,0 +1,1389 @@
+# ==============================================================================
+# IDCM Formula Registry — Single Source of Truth
+# Schema v1.0 — 2026-07-27
+# 
+# 每條公式記錄：
+#   - 公式本體 (expression, value)
+#   - 母構體 (parent) — 從哪個結構湧現
+#   - 推導類型 (derivation_type) — structural / perturbative / fitting
+#   - 修正記錄 (corrections) — 微擾修正的來源
+#   - 審計標記 (audit) — 自動檢測用 metadata
+# ==============================================================================
+
+# ─── Schema Metadata ───
+schema_version: "1.0"
+last_updated: "2026-07-27"
+curator: "L. Ng"
+description: "Complete IDCM formula registry with parent structure tracking and anti-fitting audit"
+
+# ─── 母構體目錄 (Parent Structure Catalog) ───
+# 每個母構體是公式湧現的源頭
+parent_structures:
+  K_chain_tree:
+    id: "K = K_chain ⊗ K_tree"
+    description: "W-field coupling matrix tensor product decomposition"
+    parameters: ["N_d=44", "L=53/8", "M=33"]
+    outputs: "Fermion mass ratios, sector k-values"
+    
+  W_field_potential:
+    id: "V = -ε|W|² + κ|W|⁴"
+    description: "W-field potential minimum and curvature"
+    parameters: ["ε=φ⁻¹/4", "κ=1/16"]
+    outputs: "Higgs mass (radial mode), PG mass (phase mode)"
+    
+  MERA_isometry:
+    id: "U = 1/√(φ²+1) [φ,1; 1,-φ]"
+    description: "MERA isometry preserving φ-ratio across layers"
+    parameters: ["φ"]
+    outputs: "Generation mixing, PMNS angles"
+    
+  chain_eigenvalue:
+    id: "γ_n = 4sin²(πn/(2N_d))"
+    description: "Discrete chain Laplacian eigenvalue spectrum"
+    parameters: ["N_d=44"]
+    outputs: "Three generation modes, mass hierarchy"
+    
+  tree_eigenvalue:
+    id: "μ_m = φ^(L-m)"
+    description: "MERA tree eigenvalue spectrum"
+    parameters: ["L=53/8", "φ"]
+    outputs: "Sector k-values (k_u, k_d, k_l)"
+    
+  MERA_total_depth:
+    id: "D_H/L_P = φ^(N_d·L + boundary)"
+    description: "Total MERA graph depth → Hubble/Planck ratio"
+    parameters: ["N_d=44", "L=53/8", "ε"]
+    outputs: "D_H/L_P, L_P, H₀"
+    
+  renormalization_flow:
+    id: "M_P = m_e / ε^(17φ + φ⁻⁵ + corrections)"
+    description: "Renormalization flow from electron to Planck mass"
+    parameters: ["φ", "ε", "m_e"]
+    outputs: "M_P, G, ħ"
+    
+  CY3_geometry:
+    id: "CY₃(36,98) κ-tensor"
+    description: "Calabi-Yau threefold Hodge numbers and geometric fingerprint"
+    parameters: ["h¹¹=36", "h²¹=98", "M=33"]
+    outputs: "k-values, CKM hierarchy, geometric invariants"
+    
+  sync_boundary:
+    id: "Sync node boundary interface"
+    description: "Boundary corrections at the edge of causal domain chain"
+    parameters: ["ε", "N_d"]
+    outputs: "ε²-ε³-ε⁴ series, EM corrections"
+    
+  budget_scheduling:
+    id: "Finite throughput scheduling"
+    description: "Fibonacci scheduling of finite pipe width"
+    parameters: ["φ"]
+    outputs: "Ω_Λ, dark energy"
+
+# ─── 推導類型定義 ───
+derivation_types:
+  structural: "從母構體直接推導，零自由參數"
+  perturbative: "從結構公式加上已知微擾機制（RG, GW instanton）"
+  fitting: "無結構推導，多項式擬合"
+
+# ─── 公式列表 ───
+formulas:
+  # ==========================================================================
+  # 1. 結構常數 (Structural Constants)
+  # ==========================================================================
+  - id: φ
+    expression: "x^2 + x - 1 = 0 -> phi = (1+sqrt{5})/2"
+    value: 1.618033988749895
+    unit: dimensionless
+    error_pct: 0.0
+    status: "📥"
+    parent:
+      structure: "Meta-axiom: 0,1"
+      sector: null
+      mode: "Recursion fixed point"
+      parameter: "x²+x-1=0"
+      generation: null
+      eigenvalue: null
+    derivation_type: "axiom"
+    derivation_path:
+      - "0,1 → finite strings → finite throughput → Fibonacci → φ"
+      - "x²+x-1=0 → φ (slowest integer-closure quadratic)"
+    corrections: []
+    audit:
+      parameter_count: 0
+      consecutive_powers: false
+      suspicious_patterns: []
+      notes: "Unique slowest-growth integer-closure quadratic"
+    papers:
+      - "all_papers"
+
+  - id: ε
+    expression: "eps = phi^{-1}/4"
+    value: 0.1545084971874737
+    unit: dimensionless
+    error_pct: 0.0
+    status: "📥"
+    parent:
+      structure: "MERA branching"
+      sector: null
+      mode: "2D branching factor"
+      parameter: "φ³-φ⁻³=4"
+      generation: null
+      eigenvalue: null
+    derivation_type: "structural"
+    derivation_path:
+      - "x²+x-1=0 → φ"
+      - "φ³-φ⁻³=4 → ε = φ⁻¹/4"
+    corrections: []
+    audit:
+      parameter_count: 0
+      consecutive_powers: false
+      suspicious_patterns: []
+      notes: "Quarter inverse = 1/4 of φ⁻¹"
+    papers:
+      - "all_papers"
+
+  - id: κ
+    expression: "kappa = 1/16 = 4^{-2}"
+    value: 0.0625
+    unit: dimensionless
+    error_pct: 0.0
+    status: "📥"
+    parent:
+      structure: "MERA branching"
+      sector: null
+      mode: "Quantum of quantum gravity"
+      parameter: "4²"
+      generation: null
+      eigenvalue: null
+    derivation_type: "structural"
+    derivation_path:
+      - "x²+x-1=0 → φ"
+      - "φ³-φ⁻³=4 → κ = 1/4²"
+    corrections: []
+    audit:
+      parameter_count: 0
+      consecutive_powers: false
+      suspicious_patterns: []
+      notes: "Square of inverse MERA branching"
+    papers:
+      - "all_papers"
+
+  - id: β
+    expression: "beta = phi^{-1}/2"
+    value: 0.3090169943749474
+    unit: dimensionless
+    error_pct: 0.0
+    status: "📥"
+    parent:
+      structure: "Recursion step"
+      sector: null
+      mode: "Sync exponent"
+      parameter: "φ⁻¹/2"
+      generation: null
+      eigenvalue: null
+    derivation_type: "structural"
+    derivation_path:
+      - "x²+x-1=0 → φ"
+      - "β = φ⁻¹/2 (forward/backward symmetry)"
+    corrections: []
+    audit:
+      parameter_count: 0
+      consecutive_powers: false
+      suspicious_patterns: []
+      notes: "Half inverse = 1/2 of φ⁻¹"
+    papers:
+      - "all_papers"
+
+  - id: N_d
+    expression: "N_d = (phi^3-phi^{-3})(phi^5-phi^{-5}) = 4 * 11 = 44"
+    value: 44.0
+    unit: dimensionless
+    error_pct: 0.0
+    status: "📥"
+    parent:
+      structure: "φ-identity product"
+      sector: null
+      mode: "Causal domain count"
+      parameter: "φ³-φ⁻³=4, φ⁵-φ⁻⁵=11"
+      generation: null
+      eigenvalue: null
+    derivation_type: "structural"
+    derivation_path:
+      - "x²+x-1=0 → φ"
+      - "φⁿ-φ⁻ⁿ∈ℤ for odd n → 4, 11"
+      - "N_d = 4 × 11 = 44"
+    corrections: []
+    audit:
+      parameter_count: 0
+      consecutive_powers: false
+      suspicious_patterns: []
+      notes: "Product of 3rd and 5th φ-identity"
+    papers:
+      - "all_papers"
+
+  - id: L
+    expression: "L = (N_d + 3^2)/2^3 = 53/8 = 6.625"
+    value: 6.625
+    unit: dimensionless
+    error_pct: 0.0
+    status: "📥"
+    parent:
+      structure: "MERA tree depth"
+      sector: null
+      mode: "Layers per domain"
+      parameter: "N_d=44, N_gen=3"
+      generation: null
+      eigenvalue: null
+    derivation_type: "structural"
+    derivation_path:
+      - "N_d = 44"
+      - "L = (N_d + 3²)/2³ = 53/8"
+    corrections: []
+    audit:
+      parameter_count: 0
+      consecutive_powers: false
+      suspicious_patterns: []
+      notes: "Also expressible as 2π + (11κ-κ²)/2"
+    papers:
+      - "all_papers"
+
+  - id: M
+    expression: "M = h^{11} - 3 = 36 - 3 = 33"
+    value: 33.0
+    unit: dimensionless
+    error_pct: 0.0
+    status: "📥"
+    parent:
+      structure: "CY₃ geometry"
+      sector: null
+      mode: "Divisor count minus Kähler moduli"
+      parameter: "h¹¹=36"
+      generation: null
+      eigenvalue: null
+    derivation_type: "structural"
+    derivation_path:
+      - "CY₃(36,98) → h¹¹=36"
+      - "M = h¹¹ - 3 = 33"
+    corrections: []
+    audit:
+      parameter_count: 0
+      consecutive_powers: false
+      suspicious_patterns: []
+      notes: "CY₃ Hodge number derived, not fitted"
+    papers:
+      - "all_papers"
+
+  # ==========================================================================
+  # 2. Sector k-Values
+  # ==========================================================================
+  - id: k_u
+    expression: "k_u = Mbeta = 33beta"
+    value: 10.197560342473264
+    unit: dimensionless
+    error_pct: null
+    status: "📥"
+    parent:
+      structure: "K = K_chain ⊗ K_tree"
+      sector: "up-type"
+      mode: "Tree level m=0"
+      parameter: "M=33, β=φ⁻¹/2"
+      generation: null
+      eigenvalue: "μ_{m=0}"
+    derivation_type: "structural"
+    derivation_path:
+      - "x²+x-1=0 → φ, β"
+      - "CY₃ h¹¹=36 → M=33"
+      - "k_u = Mβ"
+    corrections: []
+    audit:
+      parameter_count: 0
+      consecutive_powers: false
+      suspicious_patterns: []
+      notes: "Up-type sector = full tree depth"
+    papers:
+      - "W_FIELD_SM_FORMULAS_en-US.md"
+      - "first_principles_sm.md"
+
+  - id: k_d
+    expression: "k_d = 26beta - phi^{-4}"
+    value: 7.888543082011147
+    unit: dimensionless
+    error_pct: null
+    status: "📥"
+    parent:
+      structure: "K = K_chain ⊗ K_tree"
+      sector: "down-type"
+      mode: "Tree level m=1 with φ⁻⁴ boundary"
+      parameter: "M=33, β=φ⁻¹/2, φ⁻⁴"
+      generation: null
+      eigenvalue: "μ_{m=1}"
+    derivation_type: "structural"
+    derivation_path:
+      - "k_u = Mβ"
+      - "k_d = (M-7)β - φ⁻⁴"
+      - "7 = φ⁵-φ⁻⁵ - (φ³-φ⁻³) = 11-4"
+    corrections: []
+    audit:
+      parameter_count: 0
+      consecutive_powers: false
+      suspicious_patterns: []
+      notes: "Boundary subtracted by φ⁻⁴"
+    papers:
+      - "W_FIELD_SM_FORMULAS_en-US.md"
+      - "first_principles_sm.md"
+
+  - id: k_l
+    expression: "k_l = 19beta"
+    value: 5.871322904123999
+    unit: dimensionless
+    error_pct: null
+    status: "📥"
+    parent:
+      structure: "K = K_chain ⊗ K_tree"
+      sector: "lepton"
+      mode: "Tree level m=2"
+      parameter: "M=33, β=φ⁻¹/2"
+      generation: null
+      eigenvalue: "μ_{m=2}"
+    derivation_type: "structural"
+    derivation_path:
+      - "k_u = Mβ, k_d = 26β-φ⁻⁴"
+      - "k_l = (M-14)β = 19β"
+      - "14 = 7×2 = two sector steps"
+    corrections: []
+    audit:
+      parameter_count: 0
+      consecutive_powers: false
+      suspicious_patterns: []
+      notes: "Shallowest tree layer"
+    papers:
+      - "W_FIELD_SM_FORMULAS_en-US.md"
+      - "first_principles_sm.md"
+
+  - id: k_H
+    expression: "k_H = 9beta/2"
+    value: 1.3905764766872633
+    unit: dimensionless
+    error_pct: null
+    status: "📥"
+    parent:
+      structure: "W-field potential"
+      sector: "Higgs"
+      mode: "Radial mode curvature"
+      parameter: "β=φ⁻¹/2"
+      generation: null
+      eigenvalue: null
+    derivation_type: "structural"
+    derivation_path:
+      - "V = -ε|W|² + κ|W|⁴"
+      - "m_H = 2√κ × V_EW"
+      - "k_H = 9β/2 (from potential curvature ratio)"
+    corrections: []
+    audit:
+      parameter_count: 0
+      consecutive_powers: false
+      suspicious_patterns: []
+      notes: "Not a K-matrix eigenvalue — radial mode"
+    papers:
+      - "W_field_Higgs.md"
+      - "W_FIELD_SM_FORMULAS_en-US.md"
+
+  # ==========================================================================
+  # 3. Third Generation (Inputs)
+  # ==========================================================================
+  - id: m_t
+    expression: "m_t = V_{EW} (input)"
+    value: 172.76
+    unit: GeV
+    error_pct: null
+    status: "📥"
+    parent:
+      structure: "K = K_chain ⊗ K_tree"
+      sector: "up-type"
+      mode: "Chain mode n=1 (full VEV)"
+      parameter: null
+      generation: 3
+      eigenvalue: "γ₁"
+    derivation_type: "input"
+    derivation_path: []
+    corrections: []
+    audit:
+      parameter_count: 0
+      consecutive_powers: false
+      suspicious_patterns: []
+      notes: "3rd-gen input, PDG value"
+    papers:
+      - "W_FIELD_SM_FORMULAS_en-US.md"
+      - "first_principles_sm.md"
+
+  - id: m_b
+    expression: "m_b = V_{EW} (input)"
+    value: 4.18
+    unit: GeV
+    error_pct: null
+    status: "📥"
+    parent:
+      structure: "K = K_chain ⊗ K_tree"
+      sector: "down-type"
+      mode: "Chain mode n=1 (full VEV)"
+      parameter: null
+      generation: 3
+      eigenvalue: "γ₁"
+    derivation_type: "input"
+    derivation_path: []
+    corrections: []
+    audit:
+      parameter_count: 0
+      consecutive_powers: false
+      suspicious_patterns: []
+      notes: "3rd-gen input, PDG value"
+    papers:
+      - "W_FIELD_SM_FORMULAS_en-US.md"
+      - "first_principles_sm.md"
+
+  - id: m_τ
+    expression: "m_tau = V_{EW} (input)"
+    value: 1.77686
+    unit: GeV
+    error_pct: null
+    status: "📥"
+    parent:
+      structure: "K = K_chain ⊗ K_tree"
+      sector: "lepton"
+      mode: "Chain mode n=1 (full VEV)"
+      parameter: null
+      generation: 3
+      eigenvalue: "γ₁"
+    derivation_type: "input"
+    derivation_path: []
+    corrections: []
+    audit:
+      parameter_count: 0
+      consecutive_powers: false
+      suspicious_patterns: []
+      notes: "3rd-gen input, PDG value"
+    papers:
+      - "W_FIELD_SM_FORMULAS_en-US.md"
+      - "first_principles_sm.md"
+
+  # ==========================================================================
+  # 4. Second Generation (φ-power from 3rd-gen)
+  # ==========================================================================
+  - id: m_c
+    expression: "m_c = phi^{-k_u} * m_t"
+    value: 1.277259
+    unit: GeV
+    error_pct: 0.5716
+    status: "🟢"
+    parent:
+      structure: "K = K_chain ⊗ K_tree"
+      sector: "up-type"
+      mode: "Chain mode n=2, tree level m=0"
+      parameter: "k_u=33β"
+      generation: 2
+      eigenvalue: "γ₂/γ₁ · μ₀/μ₀ = φ⁻ᵏᵘ"
+    derivation_type: "structural"
+    derivation_path:
+      - "k_u = Mβ = 33β"
+      - "m_c/m_t = γ₂/γ₁ · μ₀/μ₀ → φ⁻ᵏᵘ"
+      - "m_c = φ⁻ᵏᵘ · m_t"
+    corrections: []
+    audit:
+      parameter_count: 0
+      consecutive_powers: false
+      suspicious_patterns: []
+      notes: "Single φ-power, no free parameters"
+    papers:
+      - "W_FIELD_SM_FORMULAS_en-US.md"
+      - "first_principles_sm.md"
+
+  - id: m_s
+    expression: "m_s = phi^{-k_d} * m_b"
+    value: 0.093879
+    unit: GeV
+    error_pct: -1.1801
+    status: "🟢"
+    parent:
+      structure: "K = K_chain ⊗ K_tree"
+      sector: "down-type"
+      mode: "Chain mode n=2, tree level m=1"
+      parameter: "k_d=26β-φ⁻⁴"
+      generation: 2
+      eigenvalue: "γ₂/γ₁ · μ₁/μ₁ = φ⁻ᵏᵈ"
+    derivation_type: "structural"
+    derivation_path:
+      - "k_d = 26β - φ⁻⁴"
+      - "m_s/m_b = φ⁻ᵏᵈ"
+      - "m_s = φ⁻ᵏᵈ · m_b"
+    corrections: []
+    audit:
+      parameter_count: 0
+      consecutive_powers: false
+      suspicious_patterns: []
+      notes: "Single φ-power, no free parameters"
+    papers:
+      - "W_FIELD_SM_FORMULAS_en-US.md"
+      - "first_principles_sm.md"
+
+  - id: m_μ
+    expression: "m_mu = phi^{-k_l} * m_tau"
+    value: 0.105346
+    unit: GeV
+    error_pct: -0.2969
+    status: "🟢"
+    parent:
+      structure: "K = K_chain ⊗ K_tree"
+      sector: "lepton"
+      mode: "Chain mode n=2, tree level m=2"
+      parameter: "k_l=19β"
+      generation: 2
+      eigenvalue: "γ₂/γ₁ · μ₂/μ₂ = φ⁻ᵏˡ"
+    derivation_type: "structural"
+    derivation_path:
+      - "k_l = 19β"
+      - "m_μ/m_τ = φ⁻ᵏˡ"
+      - "m_μ = φ⁻ᵏˡ · m_τ"
+    corrections: []
+    audit:
+      parameter_count: 0
+      consecutive_powers: false
+      suspicious_patterns: []
+      notes: "Single φ-power, no free parameters"
+    papers:
+      - "W_FIELD_SM_FORMULAS_en-US.md"
+      - "first_principles_sm.md"
+
+  # ==========================================================================
+  # 5. First Generation (Composite Suppression)
+  # ==========================================================================
+  - id: m_u
+    expression: "m_u = phi^{-(k_u+k_d+k_l-phi^{-1})} * m_t"
+    value: 0.00229
+    unit: GeV
+    error_pct: 4.082
+    status: "🟢"
+    parent:
+      structure: "K = K_chain ⊗ K_tree"
+      sector: "up-type"
+      mode: "Composite: chain mode n=3, all sectors"
+      parameter: "k_u, k_d, k_l, φ⁻¹"
+      generation: 1
+      eigenvalue: "γ₃/γ₁ (composite)"
+    derivation_type: "structural"
+    derivation_path:
+      - "k_u = Mβ, k_d = 26β-φ⁻⁴, k_l = 19β"
+      - "m_u/m_t = φ⁻ᵏᵘ⁻ᵏᵈ⁻ᵏˡ⁺φ⁻¹"
+      - "m_u = φ⁻(k_u+k_d+k_l-φ⁻¹) · m_t"
+    corrections:
+      - type: "GW instanton"
+        source: "Gravitational instanton correction"
+        expected: "~4%"
+        status: "pending"
+    audit:
+      parameter_count: 0
+      consecutive_powers: false
+      suspicious_patterns: []
+      notes: "Largest residual (4.08%) — GW instanton corrections expected"
+    papers:
+      - "W_FIELD_SM_FORMULAS_en-US.md"
+      - "first_principles_sm.md"
+
+  - id: m_d
+    expression: "m_d = phi^{-(2k_d-phi)} * m_b"
+    value: 0.004593
+    unit: GeV
+    error_pct: -2.2738
+    status: "🟢"
+    parent:
+      structure: "K = K_chain ⊗ K_tree"
+      sector: "down-type"
+      mode: "Composite: chain mode n=3, double down"
+      parameter: "k_d, φ"
+      generation: 1
+      eigenvalue: "γ₃/γ₁ (composite)"
+    derivation_type: "structural"
+    derivation_path:
+      - "k_d = 26β-φ⁻⁴"
+      - "m_d/m_b = φ⁻²ᵏᵈ⁺ᵠ"
+      - "m_d = φ⁻(2k_d-φ) · m_b"
+    corrections:
+      - type: "MSSM 2-loop RG"
+        source: "Renormalization group running"
+        expected: "4.60 MeV → 4.7 MeV"
+        status: "structural"
+    audit:
+      parameter_count: 0
+      consecutive_powers: false
+      suspicious_patterns: []
+      notes: "RG running needed for final precision"
+    papers:
+      - "W_FIELD_SM_FORMULAS_en-US.md"
+      - "first_principles_sm.md"
+
+  - id: m_e
+    expression: "m_e = phi^{-(k_l+M/3)} * m_tau"
+    value: 0.000529
+    unit: GeV
+    error_pct: 3.5939
+    status: "🟢"
+    parent:
+      structure: "K = K_chain ⊗ K_tree"
+      sector: "lepton"
+      mode: "Composite: chain mode n=3"
+      parameter: "k_l, M=33"
+      generation: 1
+      eigenvalue: "γ₃/γ₁ (composite)"
+    derivation_type: "structural"
+    derivation_path:
+      - "k_l = 19β, M = 33"
+      - "m_e/m_τ = φ⁻ᵏˡ⁻ᴹᐟ³"
+      - "m_e = φ⁻(k_l+M/3) · m_τ"
+    corrections:
+      - type: "GW instanton"
+        source: "Gravitational instanton correction"
+        expected: "~3.6%"
+        status: "pending"
+    audit:
+      parameter_count: 0
+      consecutive_powers: false
+      suspicious_patterns: []
+      notes: "GW instanton corrections expected to close the gap"
+    papers:
+      - "W_FIELD_SM_FORMULAS_en-US.md"
+      - "first_principles_sm.md"
+
+  # ==========================================================================
+  # 6. Mass Ratios
+  # ==========================================================================
+  - id: m_μ/m_e
+    expression: "m_mu/m_e = phi^{11} + 3phi^2"
+    value: 206.859127
+    unit: dimensionless
+    error_pct: 0.0439
+    status: "🟢"
+    parent:
+      structure: "K = K_chain ⊗ K_tree"
+      sector: "lepton"
+      mode: "ψ⁴ self-interaction vertex"
+      parameter: "11=φ⁵-φ⁻⁵, 3=C(3,2), φ²=ψ⁴"
+      generation: null
+      eigenvalue: "φ¹¹ + 3φ²"
+    derivation_type: "structural"
+    derivation_path:
+      - "φ¹¹: base φ-power from tree depth"
+      - "3φ²: ψ⁴ vertex × C(3,2) generation pairs"
+      - "φ¹¹ + 3φ² = φ¹¹ + φ⁵ - φ² - φ⁻¹ (exact identity)"
+    corrections: []
+    audit:
+      parameter_count: 0
+      consecutive_powers: false
+      suspicious_patterns: []
+      notes: "Both terms structural. Expanded form φ¹¹+φ⁵-φ²-φ⁻¹ is equivalent via exact φ-identity, but should NOT be used as primary — looks like 4-parameter fit"
+    papers:
+      - "01-paper_string_theory_as_over_interpreted.md"
+      - "03-paper_quantum_mechanics_as_necessity.md"
+      - "04-epilogue_end_of_fundamentalism.md"
+
+  - id: m_τ/m_μ
+    expression: "m_tau/m_mu = phi^{k_l} = phi^{19beta}"
+    value: 16.866847
+    unit: dimensionless
+    error_pct: 0.2962
+    status: "🟢"
+    parent:
+      structure: "K = K_chain ⊗ K_tree"
+      sector: "lepton"
+      mode: "Inverse: tree level μ₂"
+      parameter: "k_l=19β"
+      generation: null
+      eigenvalue: "μ₂/μ₁ = φᵏˡ"
+    derivation_type: "structural"
+    derivation_path:
+      - "k_l = 19β"
+      - "m_τ/m_μ = 1/φ⁻ᵏˡ = φᵏˡ"
+    corrections: []
+    audit:
+      parameter_count: 0
+      consecutive_powers: false
+      suspicious_patterns: []
+      notes: "STRUCTURAL formula — use this as primary"
+    papers:
+      - "01-paper_string_theory_as_over_interpreted.md"
+
+  - id: m_τ/m_μ_alt
+    expression: "m_tau/m_mu = N_d/phi^2 + phi^{-1}/N_d"
+    value: 16.820551
+    unit: dimensionless
+    error_pct: 0.021
+    status: "🟢"
+    parent:
+      structure: "Chain eigenvalue ratio"
+      sector: "lepton"
+      mode: "γ₁/γ₂ ratio"
+      parameter: "N_d=44, φ"
+      generation: null
+      eigenvalue: "γ₁/γ₂ = N_d/φ² + φ⁻¹/N_d"
+    derivation_type: "structural"
+    derivation_path:
+      - "γ₁ = 4sin²(π/88), γ₂ = 4sin²(π/44)"
+      - "γ₁/γ₂ → N_d/φ² + φ⁻¹/N_d"
+    corrections: []
+    audit:
+      parameter_count: 0
+      consecutive_powers: false
+      suspicious_patterns: []
+      notes: "From chain eigenvalue ratio, structurally derived"
+    papers:
+      - "02-paper_general_relativity_as_consistency.md"
+      - "03-paper_quantum_mechanics_as_necessity.md"
+
+  - id: m_τ/m_μ_approx
+    expression: "m_tau/m_mu = phi^6 - 1 - eps + eps^2 + eps^3"
+    value: 16.817325
+    unit: dimensionless
+    error_pct: 0.0018
+    status: "🟡"
+    parent:
+      structure: "NONE — polynomial fitting"
+      sector: "lepton"
+      mode: "NONE"
+      parameter: null
+      generation: null
+      eigenvalue: null
+    derivation_type: "fitting"
+    derivation_path: []
+    corrections:
+      - type: "none"
+    audit:
+      parameter_count: 5
+      consecutive_powers: true
+      power_ratio_check: "ε⁻¹ = 6.472 (geometric series)"
+      suspicious_patterns:
+        - "5-term polynomial with no structural derivation"
+        - "3 consecutive ε-powers (ε, ε², ε³)"
+        - "truncated geometric series"
+        - "0.0018% error achieved by adding parameters, not structure"
+      notes: "FITTING. Use φ^(19β) or N_d/φ²+φ⁻¹/N_d instead. This formula should be deprecated in papers."
+    papers:
+      - "03-paper_quantum_mechanics_as_necessity.md"
+      - "04-epilogue_end_of_fundamentalism.md"
+
+  # ==========================================================================
+  # 7. Fine Structure Constant
+  # ==========================================================================
+  - id: α⁻¹
+    expression: "alpha^{-1} = 134 + 3 + (44-29)phi^{-1}/256"
+    value: 137.036213
+    unit: dimensionless
+    error_pct: 0.000156
+    status: "🟢"
+    parent:
+      structure: "U(1) charge quantization"
+      sector: "EM"
+      mode: "Boundary correction"
+      parameter: "h¹¹=36, h²¹=98, N_gen=3, N_d=44, φ⁷-φ⁻⁷=29"
+      generation: null
+      eigenvalue: null
+    derivation_type: "structural"
+    derivation_path:
+      - "134 = h¹¹ + h²¹ = 36 + 98"
+      - "3 = N_gen"
+      - "29 = φ⁷-φ⁻⁷"
+      - "α⁻¹ = 137 + 15φ⁻¹/256"
+    corrections: []
+    audit:
+      parameter_count: 0
+      consecutive_powers: false
+      suspicious_patterns: []
+      notes: "Also expressible as 137 + ε²·φ - ε⁴·φ³ = 137 + 15φ⁻¹/256"
+    papers:
+      - "first_principles_sm.md"
+      - "01-paper_string_theory_as_over_interpreted.md"
+      - "03-paper_quantum_mechanics_as_necessity.md"
+      - "04-epilogue_end_of_fundamentalism.md"
+
+  # ==========================================================================
+  # 8. CKM Mixing
+  # ==========================================================================
+  - id: V_us
+    expression: "V_{us} = phi^{-M/11} = phi^{-3}"
+    value: 0.236068
+    unit: dimensionless
+    error_pct: 5.2465
+    status: "🟡"
+    parent:
+      structure: "CKM generation gap"
+      sector: "quark"
+      mode: "1st-2nd gen mixing"
+      parameter: "M=33, 11=φ⁵-φ⁻⁵"
+      generation: null
+      eigenvalue: null
+    derivation_type: "structural"
+    derivation_path:
+      - "M = 33"
+      - "V_us = φ⁻ᴹᐟ¹¹ = φ⁻³"
+    corrections: []
+    audit:
+      parameter_count: 0
+      consecutive_powers: false
+      suspicious_patterns: []
+      notes: "5.25% error — needs refined derivation"
+    papers:
+      - "first_principles_sm.md"
+      - "gravitational_phenomena/05-ckm_mixing_derivation.md"
+
+  - id: V_cb
+    expression: "V_{cb} = phi^2/64 = phi^2/4^3"
+    value: 0.040907
+    unit: dimensionless
+    error_pct: -0.226
+    status: "🟢"
+    parent:
+      structure: "CKM generation gap"
+      sector: "quark"
+      mode: "2nd-3rd gen mixing"
+      parameter: "φ², 4³=64"
+      generation: null
+      eigenvalue: null
+    derivation_type: "structural"
+    derivation_path:
+      - "V_cb = φ²/64"
+      - "64 = 4³ = (φ³-φ⁻³)³"
+    corrections: []
+    audit:
+      parameter_count: 0
+      consecutive_powers: false
+      suspicious_patterns: []
+      notes: "Excellent agreement with PDG"
+    papers:
+      - "first_principles_sm.md"
+      - "gravitational_phenomena/05-ckm_mixing_derivation.md"
+
+  - id: V_ub
+    expression: "V_{ub} = phi^{-(M/5 + M/11 + 2)}"
+    value: 0.003765
+    unit: dimensionless
+    error_pct: -0.926
+    status: "🟢"
+    parent:
+      structure: "CKM generation gap"
+      sector: "quark"
+      mode: "1st-3rd gen mixing"
+      parameter: "M=33, 5=φ⁴-φ⁻⁴, 11=φ⁵-φ⁻⁵"
+      generation: null
+      eigenvalue: null
+    derivation_type: "structural"
+    derivation_path:
+      - "V_ub = stacked V_us × V_cb × generation gap"
+      - "V_ub = φ⁻(M/5 + M/11 + 2)"
+    corrections: []
+    audit:
+      parameter_count: 0
+      consecutive_powers: false
+      suspicious_patterns: []
+      notes: "Stacked exponent = sum of independent gaps"
+    papers:
+      - "first_principles_sm.md"
+      - "gravitational_phenomena/05-ckm_mixing_derivation.md"
+
+  # ==========================================================================
+  # 9. Cosmological Constants
+  # ==========================================================================
+  - id: Ω_Λ
+    expression: "Omega_Lambda = 4/(phi^4-1)"
+    value: 0.683282
+    unit: dimensionless
+    error_pct: -0.2072
+    status: "🟢"
+    parent:
+      structure: "Budget scheduling"
+      sector: "cosmology"
+      mode: "Dark energy = heat dissipation"
+      parameter: "4=φ³-φ⁻³, φ⁴-1"
+      generation: null
+      eigenvalue: null
+    derivation_type: "structural"
+    derivation_path:
+      - "Finite throughput → Fibonacci scheduling"
+      - "Heat dissipation = 4/(φ⁴-1)"
+    corrections: []
+    audit:
+      parameter_count: 0
+      consecutive_powers: false
+      suspicious_patterns: []
+      notes: "Within 0.25σ of DESI DR2"
+    papers:
+      - "all_papers"
+
+  - id: Ω_Λ_approx
+    expression: "Omega_Lambda \= phi^{-1}(1+kappa)"
+    value: 0.656661
+    unit: dimensionless
+    error_pct: -4.0951
+    status: "🟡"
+    parent:
+      structure: "Budget scheduling (approx)"
+      sector: "cosmology"
+      mode: "First-order approximation"
+      parameter: "φ⁻¹, κ=1/16"
+      generation: null
+      eigenvalue: null
+    derivation_type: "structural"
+    derivation_path:
+      - "Ω_Λ = 4/(φ⁴-1)"
+      - "≈ φ⁻¹(1+κ) (first-order expansion)"
+    corrections: []
+    audit:
+      parameter_count: 0
+      consecutive_powers: false
+      suspicious_patterns: []
+      notes: "Approximation in GR paper §5.2, within 4.1%"
+    papers:
+      - "02-paper_general_relativity_as_consistency.md"
+
+  - id: N_h
+    expression: "N_h = 16phi^2 = c/(H_0xi)"
+    value: 41.8885
+    unit: dimensionless
+    error_pct: null
+    status: "🟢"
+    parent:
+      structure: "Sync domain count"
+      sector: "cosmology"
+      mode: "Hubble sync number"
+      parameter: "16, φ²"
+      generation: null
+      eigenvalue: null
+    derivation_type: "structural"
+    derivation_path:
+      - "N_h = 16φ²"
+      - "= c/(H₀ξ)"
+    corrections: []
+    audit:
+      parameter_count: 0
+      consecutive_powers: false
+      suspicious_patterns: []
+      notes: "42 is deprecated — use N_h = 16φ²"
+    papers:
+      - "first_principles_sm.md"
+
+  # ==========================================================================
+  # 10. Planck Scale
+  # ==========================================================================
+  - id: D_H/L_P
+    expression: "D_H/L_P = phi^{N_d * L + eps^2 - eps^3 - eps^4}"
+    value: 8.392223e60
+    unit: dimensionless
+    error_pct: 1.16
+    status: "🟢"
+    parent:
+      structure: "MERA total depth"
+      sector: "cosmology"
+      mode: "Total graph depth + boundary correction"
+      parameter: "N_d=44, L=53/8, ε"
+      generation: null
+      eigenvalue: null
+    derivation_type: "structural"
+    derivation_path:
+      - "N_d · L = 44 × 53/8 = 291.5"
+      - "ε²-ε³-ε⁴ = ε²(1-ε-ε²) = 0.019614"
+      - "Total = 291.519614"
+    corrections:
+      - type: "boundary"
+        source: "3 sync node interfaces"
+        terms: ["ε²", "-ε³", "-ε⁴"]
+        structural_justification: "pending"
+        note: "ε²-ε³-ε⁴ is a truncated geometric series with ratio ε. Need structural justification for truncation at ε⁴, not ε⁵ or ε⁶."
+    audit:
+      parameter_count: 0
+      consecutive_powers: true
+      power_ratio_check: "1/ε = 6.472"
+      suspicious_patterns:
+        - "3 consecutive ε-powers (ε², ε³, ε⁴)"
+        - "Truncated geometric series ε²(1-ε-ε²)"
+        - "Same ε³ correction appears in M_P formula"
+      notes: "Main term N_d·L is structural. ε-series needs boundary justification."
+    papers:
+      - "02-paper_general_relativity_as_consistency.md"
+      - "03-paper_quantum_mechanics_as_necessity.md"
+      - "04-epilogue_end_of_fundamentalism.md"
+
+  - id: M_P
+    expression: "M_P = m_e / eps^{17phi + phi^{-5} - eps^3 - phi^{-2}/256}"
+    value: 2.1755e-08
+    unit: kg
+    error_pct: -0.042
+    status: "🟢"
+    parent:
+      structure: "Renormalization flow"
+      sector: "cosmology"
+      mode: "Electron → Planck mass flow"
+      parameter: "φ, ε, m_e"
+      generation: null
+      eigenvalue: null
+    derivation_type: "structural"
+    derivation_path:
+      - "17 = 11 + 6 = (φ⁵-φ⁻⁵) + 3×2"
+      - "17φ + φ⁻⁵: main term"
+      - "-ε³: boundary correction"
+      - "-φ⁻²/256: edge correction"
+    corrections:
+      - type: "boundary"
+        source: "Renormalization boundary"
+        terms: ["-ε³", "-φ⁻²/256"]
+        structural_justification: "pending"
+        note: "Same ε³ as D_H/L_P. Need to verify if this is the same physical boundary or a coincidence."
+    audit:
+      parameter_count: 0
+      consecutive_powers: false
+      suspicious_patterns:
+        - "Same ε³ correction appears in D_H/L_P formula"
+        - "φ⁻²/256 = 1/256 × φ⁻² — the /256 factor needs structural justification"
+      notes: "Main term 17φ+φ⁻⁵ is structural. Corrections share ε³ with D_H/L_P."
+    papers:
+      - "02-paper_general_relativity_as_consistency.md"
+      - "03-paper_quantum_mechanics_as_necessity.md"
+      - "04-epilogue_end_of_fundamentalism.md"
+
+  - id: G
+    expression: "G = c^2 * L_P / M_P"
+    value: 6.754e-11
+    unit: "m³kg⁻¹s⁻²"
+    error_pct: 1.2
+    status: "🟡"
+    parent:
+      structure: "Derived from L_P and M_P"
+      sector: "cosmology"
+      mode: "Gravitational constant"
+      parameter: "L_P, M_P"
+      generation: null
+      eigenvalue: null
+    derivation_type: "structural"
+    derivation_path:
+      - "G = c²·L_P/M_P"
+    corrections: []
+    audit:
+      parameter_count: 0
+      consecutive_powers: false
+      suspicious_patterns: []
+      notes: "L_P error propagates (1.16%). Need H₀ refinement."
+    papers:
+      - "01-paper_string_theory_as_over_interpreted.md"
+      - "02-paper_general_relativity_as_consistency.md"
+
+  - id: ħ
+    expression: "hbar = M_P * L_P * c"
+    value: 1.066e-34
+    unit: "J·s"
+    error_pct: 1.12
+    status: "🟡"
+    parent:
+      structure: "Derived from L_P and M_P"
+      sector: "cosmology"
+      mode: "Planck constant"
+      parameter: "L_P, M_P"
+      generation: null
+      eigenvalue: null
+    derivation_type: "structural"
+    derivation_path:
+      - "ħ = M_P·L_P·c"
+    corrections: []
+    audit:
+      parameter_count: 0
+      consecutive_powers: false
+      suspicious_patterns: []
+      notes: "Same H₀ sensitivity as L_P"
+    papers:
+      - "03-paper_quantum_mechanics_as_necessity.md"
+
+  - id: L_P
+    expression: "L_P = D_H / phi^{583/2 + eps^2 - eps^3 - eps^4}"
+    value: 1.635e-35
+    unit: m
+    error_pct: 1.16
+    status: "🟡"
+    parent:
+      structure: "MERA total depth (inverse)"
+      sector: "cosmology"
+      mode: "Planck length from D_H"
+      parameter: "D_H, φ, ε"
+      generation: null
+      eigenvalue: null
+    derivation_type: "structural"
+    derivation_path:
+      - "L_P = D_H / φ^(N_d·L + ε²-ε³-ε⁴)"
+    corrections: []
+    audit:
+      parameter_count: 0
+      consecutive_powers: true
+      suspicious_patterns:
+        - "inherits ε²-ε³-ε⁴ from D_H/L_P"
+      notes: "Derived from D_H/L_P. Sensitive to H₀."
+    papers:
+      - "02-paper_general_relativity_as_consistency.md"
+      - "03-paper_quantum_mechanics_as_necessity.md"
+      - "04-epilogue_end_of_fundamentalism.md"
+
+  # ==========================================================================
+  # 11. Higgs Boson
+  # ==========================================================================
+  - id: m_H
+    expression: "m_H = 2sqrt{kappa} * V_{EW}"
+    value: 123.11
+    unit: GeV
+    error_pct: 1.59
+    status: "🟢"
+    parent:
+      structure: "W-field potential"
+      sector: "Higgs"
+      mode: "Radial mode (NOT K-matrix eigenvalue)"
+      parameter: "κ=1/16, V_EW=246.22"
+      generation: null
+      eigenvalue: null
+    derivation_type: "structural"
+    derivation_path:
+      - "V = -ε|W|² + κ|W|⁴"
+      - "|W|₀² = ε/(2κ)"
+      - "V''(|W|₀) = 2ε"
+      - "m_H = 2√κ × V_EW"
+    corrections:
+      - type: "RG running"
+        source: "SM 1-loop RG from GUT scale to weak scale"
+        terms: ["λ(weak)/λ(GUT) = 1.0326"]
+        structural_justification: "standard SM RG"
+        note: "GUT scale: 123.11 GeV, Weak scale: 125.10 GeV"
+    audit:
+      parameter_count: 0
+      consecutive_powers: false
+      suspicious_patterns: []
+      notes: "Radial mode, NOT φ-power. 1.59% = SM RG effect, not framework error."
+    papers:
+      - "first_principles_sm.md"
+      - "W_field_Higgs.md"
+      - "W_FIELD_SM_FORMULAS_en-US.md"
+
+  - id: m_PG
+    expression: "m_{PG} = eps * M_Z"
+    value: 14.089
+    unit: GeV
+    error_pct: null
+    status: "🔮"
+    parent:
+      structure: "W-field potential"
+      sector: "pseudo-Goldstone"
+      mode: "Phase mode (broken U(1))"
+      parameter: "ε=φ⁻¹/4, M_Z=91.188"
+      generation: null
+      eigenvalue: null
+    derivation_type: "structural"
+    derivation_path:
+      - "W-field U(1) spontaneously broken by VEV"
+      - "SU(2) embedding partially eats Goldstone"
+      - "3.6% embedding mismatch → pseudo-Goldstone"
+      - "m_PG = ε × M_Z"
+    corrections: []
+    audit:
+      parameter_count: 0
+      consecutive_powers: false
+      suspicious_patterns: []
+      notes: "Not yet observed — prediction"
+    papers:
+      - "first_principles_sm.md"
+      - "predictions/W_field_pseudo_goldstone_prediction.en-US.md"
+
+  # ==========================================================================
+  # 12. Gravitational Phenomena
+  # ==========================================================================
+  - id: κ²
+    expression: "kappa^2 = 1/256"
+    value: 0.00390625
+    unit: dimensionless
+    error_pct: 0.0
+    status: "🟢"
+    parent:
+      structure: "MUP"
+      sector: "quantum gravity"
+      mode: "MUP correction coefficient"
+      parameter: "κ=1/16"
+      generation: null
+      eigenvalue: null
+    derivation_type: "structural"
+    derivation_path:
+      - "κ = 1/16"
+      - "κ² = 1/256"
+    corrections: []
+    audit:
+      parameter_count: 0
+      consecutive_powers: false
+      suspicious_patterns: []
+      notes: "Exact: Δx·Δp ≥ ħ/2 · (1 + κ²·L_P²/Δx²)"
+    papers:
+      - "03-paper_quantum_mechanics_as_necessity.md"
+      - "04-epilogue_end_of_fundamentalism.md"
+      - "gravitational_phenomena/01-mup_structural_derivation.md"
+
+  # ==========================================================================
+  # 13. Neutrino Sector
+  # ==========================================================================
+  - id: m_ν3
+    expression: "m_{nu_3} = kappa * eps^{14} * v"
+    value: 0.048
+    unit: eV
+    error_pct: null
+    status: "🔮"
+    parent:
+      structure: "K = K_chain ⊗ K_tree"
+      sector: "neutrino"
+      mode: "Highest neutrino mass"
+      parameter: "κ=1/16, ε, v"
+      generation: 3
+      eigenvalue: null
+    derivation_type: "structural"
+    derivation_path:
+      - "m_ν3 = κ · ε¹⁴ · v"
+    corrections: []
+    audit:
+      parameter_count: 0
+      consecutive_powers: false
+      suspicious_patterns: []
+      notes: "Prediction, not yet verified"
+    papers:
+      - "quantum_gravity/15_neutrino_kappa_verify.md"
+      - "quantum_gravity/16_neutrino_kappa_verify_v2.md"
+
+  - id: m_ν2
+    expression: "m_{nu_2} = kappa * eps^{15} * v"
+    value: 0.0074
+    unit: eV
+    error_pct: null
+    status: "🔮"
+    parent:
+      structure: "K = K_chain ⊗ K_tree"
+      sector: "neutrino"
+      mode: "Middle neutrino mass"
+      parameter: "κ=1/16, ε, v"
+      generation: 2
+      eigenvalue: null
+    derivation_type: "structural"
+    derivation_path:
+      - "m_ν2 = κ · ε¹⁵ · v"
+    corrections: []
+    audit:
+      parameter_count: 0
+      consecutive_powers: true
+      power_ratio_check: "ε⁻¹ = 6.472"
+      suspicious_patterns:
+        - "Consecutive ε-powers (ε¹⁴, ε¹⁵, ε¹⁶)"
+        - "Geometric spacing with ratio ε"
+      notes: "Consecutive ε-powers are structural (generation gap), but need verification"
+    papers:
+      - "quantum_gravity/15_neutrino_kappa_verify.md"
+      - "quantum_gravity/16_neutrino_kappa_verify_v2.md"
+
+  - id: m_ν1
+    expression: "m_{nu_1} = kappa * eps^{16} * v"
+    value: 0.00114
+    unit: eV
+    error_pct: null
+    status: "🔮"
+    parent:
+      structure: "K = K_chain ⊗ K_tree"
+      sector: "neutrino"
+      mode: "Lowest neutrino mass"
+      parameter: "κ=1/16, ε, v"
+      generation: 1
+      eigenvalue: null
+    derivation_type: "structural"
+    derivation_path:
+      - "m_ν1 = κ · ε¹⁶ · v"
+    corrections: []
+    audit:
+      parameter_count: 0
+      consecutive_powers: true
+      suspicious_patterns:
+        - "Consecutive ε-powers (ε¹⁴, ε¹⁵, ε¹⁶)"
+      notes: "Consecutive ε-powers are structural (generation gap), but need verification"
+    papers:
+      - "quantum_gravity/15_neutrino_kappa_verify.md"
+      - "quantum_gravity/16_neutrino_kappa_verify_v2.md"
+
+  # ==========================================================================
+  # 14. PMNS Mixing
+  # ==========================================================================
+  - id: θ₁₂_PMNS
+    expression: "theta_{12} = arctanphi^{-1} + 1/M"
+    value: 33.45
+    unit: "°"
+    error_pct: 1.08
+    status: "🟢"
+    parent:
+      structure: "MERA isometry"
+      sector: "neutrino"
+      mode: "Solar angle"
+      parameter: "φ⁻¹, M=33"
+      generation: null
+      eigenvalue: null
+    derivation_type: "structural"
+    derivation_path:
+      - "θ₁₂ = arctan(φ⁻¹) + 1/M"
+    corrections: []
+    audit:
+      parameter_count: 0
+      consecutive_powers: false
+      suspicious_patterns: []
+      notes: "Solar angle = W-field branching ratio + M correction"
+    papers:
+      - "W_FIELD_SM_FORMULAS_en-US.md"
+      - "first_principles_sm.md"
+
+  - id: θ₁₃_PMNS
+    expression: "theta_{13} = arcsin(eps(M-1)/M)"
+    value: 8.54
+    unit: "°"
+    error_pct: null
+    status: "🟢"
+    parent:
+      structure: "MERA isometry"
+      sector: "neutrino"
+      mode: "Reactor angle"
+      parameter: "ε, M=33"
+      generation: null
+      eigenvalue: null
+    derivation_type: "structural"
+    derivation_path:
+      - "θ₁₃ = arcsin(ε(M-1)/M)"
+    corrections: []
+    audit:
+      parameter_count: 0
+      consecutive_powers: false
+      suspicious_patterns: []
+      notes: ""
+    papers:
+      - "W_FIELD_SM_FORMULAS_en-US.md"
+      - "first_principles_sm.md"
+
+  - id: δ_CP_PMNS
+    expression: "delta_{CP} = pi + arctanphi^{-3}"
+    value: 195.0
+    unit: "°"
+    error_pct: null
+    status: "🟢"
+    parent:
+      structure: "MERA isometry"
+      sector: "neutrino"
+      mode: "CP phase"
+      parameter: "φ⁻³"
+      generation: null
+      eigenvalue: null
+    derivation_type: "structural"
+    derivation_path:
+      - "δ_CP = π + arctan(φ⁻³)"
+    corrections: []
+    audit:
+      parameter_count: 0
+      consecutive_powers: false
+      suspicious_patterns: []
+      notes: "3-layer W-field stacking"
+    papers:
+      - "W_FIELD_SM_FORMULAS_en-US.md"
+      - "first_principles_sm.md"

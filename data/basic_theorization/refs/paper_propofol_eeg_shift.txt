@@ -1,0 +1,5 @@
+Title: The anesthetic propofol shifts the frequency of maximum spectral power in EEG during general anesthesia: analytical insights from a linear model
+Authors: Axel Hutt
+Year: 2013
+Journal: Frontiers in Computational Neuroscience
+Error: name 'doi' is not defined

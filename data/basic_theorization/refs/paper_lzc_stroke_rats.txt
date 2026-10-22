@@ -1,0 +1,6 @@
+Title: Lempel-Ziv complexity of the EEG predicts long-term functional recovery after stroke in rats
+Authors: Susan Leemburg; Claudio L. Bassetti
+Year: 2018
+Journal: (no journal)
+Error: name 'doi' is not defined
+Try: https://doi.org/10.1101/248039

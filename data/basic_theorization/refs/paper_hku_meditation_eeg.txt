@@ -1,0 +1,6 @@
+Title: Quantitative analysis of epileptic and meditation EEG signals
+Authors: Jin Jing
+Year: 2019
+Journal: (no journal)
+Error: name 'doi' is not defined
+Try: https://doi.org/10.32657/10356/68880

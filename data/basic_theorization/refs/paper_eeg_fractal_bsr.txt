@@ -1,0 +1,5 @@
+Title: EEG fractal dimension combined with burst suppression ratio as a measure of depth of anesthesia
+Authors: M. Cusenza; A. Accardo; A. Orsini
+Year: 2013
+Journal: IFMBE Proceedings
+Error: name 'doi' is not defined

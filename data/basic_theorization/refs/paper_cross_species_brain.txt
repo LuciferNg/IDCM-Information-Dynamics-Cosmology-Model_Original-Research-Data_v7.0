@@ -1,0 +1,6 @@
+Title: Does Size Matter? Cross-Species Analysis of Intelligence and Brain Size
+Authors: Tam Hunt
+Year: 2026
+Journal: (no journal)
+Error: name 'doi' is not defined
+Try: https://doi.org/10.20944/preprints202602.0699.v1

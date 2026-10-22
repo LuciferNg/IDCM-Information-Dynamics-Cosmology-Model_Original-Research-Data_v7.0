@@ -1,0 +1,6 @@
+Title: EEG complexity correlates with residual consciousness level of disorders of consciousness
+Authors: Yangfeng Liu; Wentao Zeng; Na Pan; Xiaoyu Xia; Yonghua Huang
+Year: 2022
+Journal: (no journal)
+Error: name 'doi' is not defined
+Try: https://doi.org/10.21203/rs.3.rs-2111301/v1

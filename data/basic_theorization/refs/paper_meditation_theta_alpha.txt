@@ -1,0 +1,5 @@
+Title: EEG alpha–theta dynamics during mind wandering in the context of breath focus meditation: An experience sampling approach with novice meditation practitioners
+Authors: Julio Rodriguez‐Larios; Kaat Alaerts
+Year: 2021
+Journal: European Journal of Neuroscience
+Error: name 'doi' is not defined
